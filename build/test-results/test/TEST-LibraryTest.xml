@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="LibraryTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2019-09-10T07:11:42" hostname="user-PC" time="0.337">
-  <properties/>
-  <testcase name="testEsMapper" classname="LibraryTest" time="0.337"/>
-  <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[]]></system-err>
-</testsuite>

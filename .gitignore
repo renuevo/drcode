@@ -1,0 +1,22 @@
+# Created by .ignore support plugin (hsz.mobi)
+build
+.idea
+.gradle
+.gradle/
+.idea/$CACHE_FILE$
+.idea/$PRODUCT_WORKSPACE_FILE$
+.idea/.gitignore
+.idea/.name
+.idea/codeStyles/
+.idea/compiler.xml
+.idea/gradle.xml
+.idea/misc.xml
+.idea/modules/
+.idea/uiDesigner.xml
+.idea/vcs.xml
+build/classes/java/main/META-INF/
+build/classes/java/main/com/
+build/classes/java/main/generated/
+build/classes/java/test/generated_tests/
+build/generated/
+build/tmp/

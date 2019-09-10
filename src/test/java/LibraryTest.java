@@ -1,4 +1,4 @@
-import com.github.renuevo.common.EsMapper;
+import com.github.renuevo.es.EsMapper;
 import org.junit.Test;
 
 import java.nio.file.Files;

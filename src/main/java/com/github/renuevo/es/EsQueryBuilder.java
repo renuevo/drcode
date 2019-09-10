@@ -1,4 +1,4 @@
-package com.github.renuevo.common;
+package com.github.renuevo.es;
 
 import java.io.*;
 import java.util.List;

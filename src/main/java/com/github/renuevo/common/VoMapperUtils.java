@@ -1,4 +1,4 @@
-package com.github.renuevo.es;
+package com.github.renuevo.common;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;

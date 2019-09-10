@@ -1,8 +1,8 @@
 package com.github.renuevo.csv;
 
-import Elastic.VoMapperUtils;
 import au.com.bytecode.opencsv.CSVReader;
 import au.com.bytecode.opencsv.CSVWriter;
+import com.github.renuevo.common.VoMapperUtils;
 
 import java.io.*;
 import java.lang.reflect.Field;

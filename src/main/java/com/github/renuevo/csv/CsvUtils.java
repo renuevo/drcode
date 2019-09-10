@@ -1,4 +1,4 @@
-package Csv;
+package com.github.renuevo.csv;
 
 import Elastic.VoMapperUtils;
 import au.com.bytecode.opencsv.CSVReader;

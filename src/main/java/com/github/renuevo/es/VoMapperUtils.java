@@ -1,4 +1,4 @@
-package Elastic;
+package com.github.renuevo.es;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;

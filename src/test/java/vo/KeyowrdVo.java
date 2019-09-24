@@ -1,4 +1,7 @@
+package vo;
+
 public class KeyowrdVo {
+
     String keyword;
     String title;
 

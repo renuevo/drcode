@@ -69,11 +69,8 @@ public class CsvUtils {
         CSVReader csvReader = null;
         List<String[]> resultList = new ArrayList<>();
 
-        //if (!charsetName.equalsIgnoreCase("utf-8"))
         try {
             csvReader = new CSVReader(new InputStreamReader(new FileInputStream(path), charsetName.toUpperCase()), ',', '\"', line);
-            //else
-            // csvReader = new CSVReader(new FileReader(path));
 
             String[] csvLine;
             boolean firstLine = true;
@@ -223,6 +220,7 @@ public class CsvUtils {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
+            if (csvWriter != null) csvWriter.close();
             if (outputStream != null) outputStream.close();
         }
     }

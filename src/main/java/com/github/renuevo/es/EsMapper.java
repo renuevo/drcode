@@ -1,6 +1,7 @@
 package com.github.renuevo.es;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -15,6 +16,7 @@ public class EsMapper {
 
     public EsMapper() {
         this.objectMapper = new ObjectMapper();
+        this.objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES,false);
     }
 
     public EsMapper(ObjectMapper objectMapper) {

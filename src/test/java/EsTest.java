@@ -1,5 +1,6 @@
 import com.github.renuevo.es.EsMapper;
 import org.junit.Test;
+import vo.KeyowrdVo;
 
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -11,13 +12,13 @@ import java.util.stream.Stream;
 import static org.junit.Assert.assertEquals;
 
 
-public class LibraryTest {
+public class EsTest {
 
     @Test
     public void testEsMapper() {
         EsMapper esMapper = new EsMapper();
         List<KeyowrdVo> list = null;
-        List<String> responseList = null;
+        List<String> responseList;
         StringBuilder response = new StringBuilder();
         int count = 0;
 
@@ -48,12 +49,6 @@ public class LibraryTest {
         }
 
         assertEquals("Is EsMapper Count Test", list.size(), count);
-
-    }
-
-    @Test
-    public void testCsvUtils() {
-
     }
 
     @Test

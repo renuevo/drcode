@@ -43,7 +43,7 @@
 > |----|----|  
 > |name|deokhwa|  
 >
-> Csv Header Is Model Member Variable Name  
+> Csv Header Is Model Member Variable Name :bangbang:  
 
 <br/>
 <br/>
@@ -57,10 +57,10 @@
 >SampleVo sampleVo2 = new SampleVo("name2","renuevo");
 >
 >Map<String, List<SampleVo>> saveMap = new HashMap<>();
->saveList.put("one", Arrays.asList(sampleVo1)); //create sample list
->saveList.put("two", Arrays.asList(sampleVo2)); //create sample list
+>saveMap.put("one", Arrays.asList(sampleVo1)); //create sample list
+>saveMap.put("two", Arrays.asList(sampleVo2)); //create sample list
 >
->csvUtils.writeCsv(saveList, path, "utf-8", SampleVo.class);   //write csv
+>csvUtils.writeCsv(saveMap, path, "utf-8", SampleVo.class);   //write csv
 >```
 >
 > **Csv Out Result**  
@@ -70,7 +70,7 @@
 > |name1|deokhwa|  
 > |name2|renuevo|  
 >
-> Csv Header Is Model Member Variable Name  
+> Csv Header Is Model Member Variable Name :bangbang:  
 
 <br/>
 <br/>

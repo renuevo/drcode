@@ -56,9 +56,4 @@ public class EsTest {
 
     }
 
-    @Test
-    public void testVoMapper() {
-
-    }
-
 }

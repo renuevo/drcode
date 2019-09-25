@@ -47,7 +47,6 @@ public class CsvUtils {
             csvWriter.writeAll(list);
         } finally {
             if (csvWriter != null) csvWriter.close();
-            if (outputStream != null) outputStream.close();
         }
     }
 
@@ -173,7 +172,6 @@ public class CsvUtils {
             e.printStackTrace();
         } finally {
             if (csvWriter != null) csvWriter.close();
-            if (outputStream != null) outputStream.close();
         }
 
 
@@ -184,7 +182,7 @@ public class CsvUtils {
         if (!path.substring(path.length() - 4).equalsIgnoreCase(".csv"))
             path += ".csv";
 
-        FileOutputStream outputStream = null;
+        FileOutputStream outputStream;
         CSVWriter csvWriter = null;
 
         try {
@@ -221,7 +219,6 @@ public class CsvUtils {
             e.printStackTrace();
         } finally {
             if (csvWriter != null) csvWriter.close();
-            if (outputStream != null) outputStream.close();
         }
     }
 
@@ -259,7 +256,6 @@ public class CsvUtils {
             }
         } finally {
             if (csvWriter != null) csvWriter.close();
-            if (outputStream != null) outputStream.close();
         }
 
     }

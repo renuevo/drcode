@@ -1,8 +1,6 @@
 import com.github.renuevo.es.EsMapper;
 import com.github.renuevo.es.EsQueryBuilder;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import vo.KeyowrdVo;
 
 import java.io.File;
@@ -18,8 +16,6 @@ import static org.junit.Assert.assertEquals;
 
 
 public class EsTest {
-
-    private final Logger log = LoggerFactory.getLogger(EsTest.class);
 
     @Test
     public void esMapperTest() {

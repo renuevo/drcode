@@ -64,7 +64,7 @@ public class CsvUtilsTest {
 
         assertFalse("Sample File Delete", csvFile.exists());
 
-        Map<String, List<CsvVo>> csvVoMap = new HashMap<>();
+        Map<String, List<CsvVo>> csvVoMap = new TreeMap<>();
 
         for (CsvVo csvVo : csvVoList) {
             csvVoMap.put(csvVo.getKey(), Collections.singletonList(csvVo));
@@ -158,6 +158,7 @@ public class CsvUtilsTest {
 
             CsvVo csvVo;
             csvTitle = csvReader.readNext();
+            csvTitle[0] = csvTitle[0].replaceAll("\uFEFF","");
 
             while ((csvLine = csvReader.readNext()) != null) {
                 csvVo = new CsvVo();
@@ -186,12 +187,12 @@ public class CsvUtilsTest {
      * </pre>
      */
     private boolean csvValueCheck(List<CsvVo> readCsvVoList) {
-        boolean resultBool = false;
+        boolean resultBool = true;
 
         if (readCsvVoList.size() == csvVoList.size()) {
             for (int i = 0; i < readCsvVoList.size(); i++) {
                 if (!readCsvVoList.get(i).equals(csvVoList.get(i))) {
-                    resultBool = true;
+                    resultBool = false;
                     break;
                 }
             }

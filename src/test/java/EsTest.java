@@ -1,7 +1,12 @@
 import com.github.renuevo.es.EsMapper;
+import com.github.renuevo.es.EsQueryBuilder;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import vo.KeyowrdVo;
 
+import java.io.File;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -14,8 +19,10 @@ import static org.junit.Assert.assertEquals;
 
 public class EsTest {
 
+    private final Logger log = LoggerFactory.getLogger(EsTest.class);
+
     @Test
-    public void testEsMapper() {
+    public void esMapperTest() {
         EsMapper esMapper = new EsMapper();
         List<KeyowrdVo> list = null;
         List<String> responseList;
@@ -52,8 +59,25 @@ public class EsTest {
     }
 
     @Test
-    public void testEsQueryBuilder() {
+    public void esQueryBuilderTest() throws IOException {
 
+        String query = EsQueryBuilder.getQuery(EsQueryBuilder.getQueryTemplate(new File(getClass().getResource("/elastic_sample_search_query.json").getFile())), "test", 2019, 10);
+        String result = "{  \"query\": {" +
+                                "\"bool\": {" +
+                                        "\"must\": [" +
+                                                "{ \"term\": { " +
+                                                    "\"search\": {\"value\": \"test\"}" +
+                                                        "} }, " +
+                                                "{ \"range\": { " +
+                                                    "\"date\": {  \"gte\": 2019, \"lte\": 10, \"format\": \"yyyy-mm-dd\"}          " +
+                                                   "}} " +
+                                                "]}" +
+                         "}}";
+
+        query = query.replaceAll("\\p{Z}","");
+        result = result.replaceAll("\\p{Z}","");
+
+        assertEquals("Query Create Check", query, result);
     }
 
 }

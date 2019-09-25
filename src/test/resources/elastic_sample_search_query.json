@@ -1,0 +1,22 @@
+{
+  "query": {
+    "bool": {
+      "must": [
+        {
+          "term": {
+            "search": {"value": "$value"}
+          }
+        },
+        {
+          "range": {
+            "date": {
+              "gte": "$start_date",
+              "lte": "$end_date",
+              "format": "yyyy-mm-dd"
+            }
+          }
+        }
+      ]
+    }
+  }
+}

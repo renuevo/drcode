@@ -7,7 +7,7 @@ import java.util.List;
  * <pre>
  * @className : EsQueryBuilder
  * @author : Deokhwa.Kim
- * @since : 2019-09-10 (refactoring)
+ * @since : 2019-09-25 (refactoring)
  * </pre>
  */
 public class EsQueryBuilder {
@@ -44,7 +44,7 @@ public class EsQueryBuilder {
 
     private static String[] queryTokenizer(String query) {
         query = query.replaceAll("(?:/\\*(?:[^*]|(?:\\*+[^*/]))*\\*+/)|(?://.*)", "");
-        return query.split("[^]+");
+        return query.split("\"\\$[A-z]*\"");
     }
 
     private static String queryCombination(String[] queryList, Object[] variables) {
@@ -55,6 +55,10 @@ public class EsQueryBuilder {
         for (String str : queryList) {
             queryBuilder.append(str);
             if (index < variables.length) {
+
+                if (variables[index] instanceof String)
+                    variables[index] = "\"" + variables[index] + "\"";
+
                 queryBuilder.append(variables[index]);
                 index++;
             }

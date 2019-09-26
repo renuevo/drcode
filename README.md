@@ -138,7 +138,8 @@ This library need for getter/setter on VoClass
 > 
 >If you have different csv header then add header name setter  
 >
->**Csv Out Result**  
+>**Csv Out Result**    
+>
 >|title|value|  
 >|----|----|  
 >|name|deokhwa|  
@@ -174,6 +175,8 @@ This library need for getter/setter on VoClass
 >5. upperUnder : setKeyValue() -> key_value
 >6. all : all key type  1 ~ 5 pleases check duplication :exclamation:  
 
+<br/>
+
 ### Set  
 >This utils return type :point_right: **Map<String, Method>**
 > 
@@ -194,7 +197,6 @@ This library need for getter/setter on VoClass
 >|----|----|
 >|key|value|
 >
-><br/>
 ><br/>
 >
 >**Example keyType All**  
@@ -224,10 +226,78 @@ This library need for getter/setter on VoClass
 >
 >***key type parameter same Set***  
 
+<br/>
+
 ---
 
+##EsQueryBuilder
+**EsQueryBuilder useful DSL query build library!** :heavy_check_mark:  
 
+**QueryTemplate**
+read json query file  
 
+String **getQueryTemplate**(File qyFile) 
+```java
+ String query = EsQueryBuilder.getQueryTemplate(new File(..)); //Json Query File Read
+```
+<br/>
 
+**getQuery**  
+json query file value change keyword : keyword is `$`
 
+```json
+{
+  "size" : "$size",  /* parameter 1 */
+  "query" : {
+      "term": {
+        "search": {"value": "$value"} /* parameter 2 */
+      }
+    }
+}
+```
 
+<br/>
+
+String **getQuery**(String query, Object... variables) 
+```java
+String dslQuery = EsQueryBuilder.getQuery(query, 10, "java"); //return to Json DSL Query
+```
+
+**Csv Out Result**    
+```json
+{
+  "size" : 10,
+  "query" : {
+      "term": {
+        "search": {"value": "java"} 
+      }
+    }
+}
+```
+
+<br/>
+
+---
+
+##EsMapper
+**EsMapper useful Elastic Response Parsing library!** :heavy_check_mark:  
+
+### Source
+>**1. getSearchCount**
+>
+>int **getSearchCount**(String response)
+>```java
+>EsMapper esMapper = new EsMapper();
+>esMapper.getSourceCount(response); //elastic search response string type
+>```
+>
+><br/>
+>
+>**2. getSearchSource**
+>
+>List<T> getSearchSource(String response, Class<T> classType)
+>```java
+>EsMapper esMapper = new EsMapper();
+>List<SampleVo> sampleVoList = esMapper.getSearchSource(response, SampleVo.class); //elastic response List<Object> return
+>```
+>

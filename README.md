@@ -9,7 +9,7 @@ repositories {
 
 dependencies {
     ...
-    implementation 'com.github.renuevo:drcode_library:1.1'  //add releases current version
+    implementation 'com.github.renuevo:drcode_library:1.2'  //add releases current version
     ...
 }
 ```  

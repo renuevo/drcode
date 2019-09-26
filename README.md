@@ -245,7 +245,7 @@ String **getQueryTemplate**(File qyFile)
 **getQuery**  
 json query file value change keyword : keyword is `$`
 
-```json
+```javascript
 {
   "size" : "$size",  /*parameter1*/
   "query" : {
@@ -264,7 +264,7 @@ String dslQuery = EsQueryBuilder.getQuery(query, 10, "java"); //return to Json D
 ```
 
 **Csv Out Result**    
-```json
+```javascript
 {
   "size" : 10,
   "query" : {

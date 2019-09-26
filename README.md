@@ -230,7 +230,7 @@ This library need for getter/setter on VoClass
 
 ---
 
-##EsQueryBuilder
+##EsQueryBuilder  
 **EsQueryBuilder useful DSL query build library!** :heavy_check_mark:  
 
 **QueryTemplate**
@@ -247,10 +247,10 @@ json query file value change keyword : keyword is `$`
 
 ```json
 {
-  "size" : "$size",  /* parameter 1 */
+  "size" : "$size",  /*parameter1*/
   "query" : {
       "term": {
-        "search": {"value": "$value"} /* parameter 2 */
+        "search": {"value": "$value"} /*parameter2*/
       }
     }
 }
@@ -279,7 +279,7 @@ String dslQuery = EsQueryBuilder.getQuery(query, 10, "java"); //return to Json D
 
 ---
 
-##EsMapper
+##EsMapper  
 **EsMapper useful Elastic Response Parsing library!** :heavy_check_mark:  
 
 ### Source

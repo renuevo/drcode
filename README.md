@@ -2,11 +2,37 @@
 
 
 ## CsvUtils  
-**CsvUtils useful csv library!**  
+**CsvUtils useful csv library!** :heavy_check_mark:  
+
+**Example Sample Vo Class**
+```java
+class SampleVo{
+    private String key;
+    private String value;
+    
+    public void setKey(String key){
+        this.key = key;
+    }
+    
+    public void setValue(String value){
+        this.value = value;
+    }
+    
+    public String getKey(){
+        return key;
+    }
+
+    public String getValue(){
+        return value;
+    }   
+}
+```
+This Library need for getter/setter on VoClass
+ 
 
 ### Write  
 >**1. Default Write**  
->>**writeCsv**(List<String[]> list, String path, String charsetName) 
+>>void **writeCsv**(List<String[]> list, String path, String charsetName) 
 > ```java
 > String[] header = {"name", "deokhwa"};
 > 
@@ -25,10 +51,8 @@
 <br/>
 
 >**2. List Model Write**
->>**writeCsv**(List<T> list, String path, String charsetName, Class<T> classType)  
+>>void **writeCsv**(List<T> list, String path, String charsetName, Class<T> classType)  
 >```java
->//SampleVo member variable String key, value; 
->//need for getter on member variable
 >SampleVo sampleVo = new SampleVo("name","deokhwa");
 >
 >List<SampleVo> saveList = new ArrayList<>();
@@ -43,16 +67,14 @@
 > |----|----|  
 > |name|deokhwa|  
 >
-> Csv Header Is Model Member Variable Name :bangbang:  
+> Csv Header Is Model Member Variable Name    
 
 <br/>
 <br/>
 
 >**3. Map Model Write**
->>**writeCsv**(Map<String, List<T>> writeMap, String path, String charsetName, Class<T> classType)  
+>>void **writeCsv**(Map<String, List<T>> writeMap, String path, String charsetName, Class<T> classType)  
 >```java
->//SampleVo member variable String key, value; 
->//need for getter on member variable
 >SampleVo sampleVo1 = new SampleVo("name1","deokhwa");
 >SampleVo sampleVo2 = new SampleVo("name2","renuevo");
 >
@@ -70,9 +92,47 @@
 > |name1|deokhwa|  
 > |name2|renuevo|  
 >
-> Csv Header Is Model Member Variable Name :bangbang:  
+> Csv Header Is Model Member Variable Name  
 
 <br/>
 <br/>
 
 ### Read
+>**1. Default Read**  
+>>List<String[]> **readCsv**(String path, String charsetName, int line)   
+> ```java
+> List<String[]> csvList = csvUtils.readCsv(path, "utf-8", 1); //write csv
+>  ```
+
+<br/>
+<br/>
+
+>**2. Model Read**  
+>>List<T> **readModelCsv**(String path, String charsetName, Class<T> classType)  
+> ```java
+> List<SampleVo> csvList = csvUtils.readModelCsv(path, "utf-8", SampleVo.class); //write csv
+>  ```
+> 
+>If you have different csv header then add header name setter  
+>
+>|title|value|  
+>|----|----|  
+>|name|deokhwa|  
+>
+> ```java
+> class SampleVo{
+>    private String key;
+>    ...
+> 
+>    //add header setter
+>    public void setTitle(String title){
+>         this.key = title;
+>    } 
+>    ...
+> }
+>  ```
+
+
+<br/>
+<br/>
+

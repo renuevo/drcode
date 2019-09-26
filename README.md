@@ -1,4 +1,4 @@
-# DRcode Library :tada:
+# DRcode Library :tada: [![](https://jitpack.io/v/renuevo/drcode.svg)](https://jitpack.io/#renuevo/drcode)
 
 Add bulid.gradle setting
 ```groovy

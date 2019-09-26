@@ -1,6 +1,5 @@
 package com.github.renuevo.common;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -17,22 +16,51 @@ import java.util.regex.Pattern;
  * @description : 상속 메소드 기능 추가
  * </pre>
  */
-
 public class VoMapperUtils {
 
     public static <T> Map<String, Method> getFieldMehtods(Class<T> classType, String methodType) {
+        return getFieldMehtods(classType, methodType, "default");
+    }
+
+    /**
+     * <pre>
+     *  @methodName : getFieldMehtods
+     *  @author : Deokhwa.Kim
+     *  @since : 2019-09-26 오후 1:59
+     *  @summary : create key method map
+     *  @param : [classType, methodType, type]
+     *  @return : java.util.Map<java.lang.String,java.lang.reflect.Method>
+     * </pre>
+     */
+    public static <T> Map<String, Method> getFieldMehtods(Class<T> classType, String methodType, String keyType) {
+        List<String> typeList = Arrays.asList("lower", "upper", "underUpper", "upperUnder"); //key type check
         Map<String, Method> methodsMap = new ConcurrentHashMap<>();
-        Field[] fields = classType.getDeclaredFields();
+        Method[] methods = classType.getDeclaredMethods();
+        Set<String> keySet = new HashSet<>();
+        String methodName;
+        String key;
         try {
-            for (Field field : fields) {
-                switch (methodType) {
-                    case "set":
-                        methodsMap.put(field.getName(), classType.getDeclaredMethod(methodType + field.getName().substring(0, 1).toUpperCase() + field.getName().substring(1), String.class));
-                        break;
-                    case "get":
-                        methodsMap.put(field.getName(), classType.getDeclaredMethod(methodType + field.getName().substring(0, 1).toUpperCase() + field.getName().substring(1)));
-                        break;
+            for (Method method : methods) {
+                keySet.clear();
+                if (method.getName().startsWith(methodType)) {
+                    methodName = method.getName();
+                    //create method key
+                    if (keyType.equals("all")) {
+                        for (String type : typeList) {
+                            key = getKey(methodName.substring(methodType.length()), type);
+                            keySet.add(key);
+                        }
+                    } else {
+                        keySet.add(getKey(methodName.substring(methodType.length()), keyType));
+                    }
+
+                    //key duplication check
+                    for(String mapKey : keySet){
+                        if (!methodsMap.containsKey(mapKey)) methodsMap.put(mapKey, method);
+                        else throw new Exception(mapKey + " this key duplication!");
+                    }
                 }
+
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -42,59 +70,45 @@ public class VoMapperUtils {
 
     /**
      * <pre>
-     *  @methodName : getSetMethods
+     *  @methodName : getKey
      *  @author : Deokhwa.Kim
-     *  @since : 2018-01-30 오후 4:02
-     *  @param classType, type
-     *  @description : data와 매핑될 vo의 set메소드 매핑
-     *  @return java.util.Map<java.lang.String, java.lang.reflect.Method>
+     *  @since : 2019-09-26 오후 1:59
+     *  @summary : create key
+     *  @param : [key, keyType]
+     *  @return : java.lang.String
      * </pre>
      */
-    public <T> Map<String, Method> getMethods(Class<T> classType, String methodType, String type) throws Exception {
+    private static String getKey(String key, String keyType) {
+        int index;
+        switch (keyType) {
+            case "lower":
+                key = key.toLowerCase();
+                break;
+            case "upper":
+                key = key.toUpperCase();
+                break;
+            case "underUpper":
+                //setCompany_name_str -> companyNameStr
+                key = key.substring(0, 1).toLowerCase() + key.substring(1);
+                if (key.substring(key.length() - 1).equals("_"))
+                    key = key.substring(0, key.length() - 1);
 
-        Map<String, Method> methodsMap = new ConcurrentHashMap<>();
-        Method[] methods = classType.getDeclaredMethods();
-        String key = null;
-        int index = 0;
-
-        for (Method method : methods) {
-            if (method.getName().startsWith(methodType)) {
-                switch (type) {
-                    case "lower":
-                        key = method.getName().substring(3).toLowerCase();
-                        break;
-                    case "upper":
-                        key = method.getName().substring(3).toUpperCase();
-                        break;
-                    case "underUpper":
-                        //setCompany_name_str -> companyNameStr
-                        key = method.getName().substring(3, 4).toLowerCase() + method.getName().substring(4);
-
-                        if (key.substring(key.length() - 1).equals("_"))
-                            key = key.substring(0, key.length() - 1);
-
-                        while ((index = key.indexOf("_")) != -1) {
-                            key = key.substring(0, index) + key.substring(index + 1, index + 2).toUpperCase() + key.substring(index + 2);
-                        }
-                        break;
-                    case "upperUnder":
-                        //setCompanyNameStr -> company_name_str
-                        key = method.getName().substring(3, 4).toLowerCase() + method.getName().substring(4);
-                        while ((index = regIndexOf(key, "[A-Z]")) != -1) {
-                            key = key.substring(0, index) + "_" + key.substring(index, index + 1).toLowerCase() + key.substring(index + 1);
-                        }
-                        break;
-                    default:
-                        //setStringIdx -> stringIdx
-                        key = method.getName().substring(3, 4).toLowerCase() + method.getName().substring(4);
-                        break;
+                while ((index = key.indexOf("_")) != -1) {
+                    key = key.substring(0, index) + key.substring(index + 1, index + 2).toUpperCase() + key.substring(index + 2);
                 }
-
-                if (!methodsMap.containsKey(key)) methodsMap.put(key, method);
-                else throw new Exception(key + " this key duplication!");
-            }
+                break;
+            case "upperUnder":
+                //setCompanyNameStr -> company_name_str
+                key = key.substring(0, 1).toLowerCase() + key.substring(1);
+                while ((index = regIndexOf(key, "[A-Z]")) != -1) {
+                    key = key.substring(0, index) + "_" + key.substring(index, index + 1).toLowerCase() + key.substring(index + 1);
+                }
+                break;
+            default:
+                key = key.substring(0, 1).toLowerCase() + key.substring(1);
+                break;
         }
-        return methodsMap;
+        return key;
     }
 
     /**
@@ -133,20 +147,20 @@ public class VoMapperUtils {
                 methodsSet.clear();
                 if (method.getName().startsWith(methodType)) {
 
-                    key = method.getName().substring(3).toLowerCase();
+                    key = method.getName().substring(methodType.length()).toLowerCase();
 
                     if (inputChk(methodsMap.keySet(), methodsSet, key))
                         throw new Exception();
                     methodsMap.put(key, method);
                     methodsSet.add(key);
 
-                    key = method.getName().substring(3).toUpperCase();
+                    key = method.getName().substring(methodType.length()).toUpperCase();
                     if (inputChk(methodsMap.keySet(), methodsSet, key))
                         throw new Exception();
                     methodsMap.put(key, method);
                     methodsSet.add(key);
 
-                    key = method.getName().substring(3, 4).toLowerCase() + method.getName().substring(4);
+                    key = method.getName().substring(methodType.length(), methodType.length() + 1).toLowerCase() + method.getName().substring(methodType.length() + 1);
                     if (key.substring(key.length() - 1).equals("_"))
                         key = key.substring(0, key.length() - 1);
 
@@ -160,7 +174,7 @@ public class VoMapperUtils {
                     methodsSet.add(key);
 
                     //setCompanyNameStr -> company_name_str
-                    key = method.getName().substring(3, 4).toLowerCase() + method.getName().substring(4);
+                    key = method.getName().substring(methodType.length(), methodType.length() + 1).toLowerCase() + method.getName().substring(methodType.length() + 1);
                     while ((index = regIndexOf(key, "[A-Z]")) != -1) {
                         key = key.substring(0, index) + "_" + key.substring(index, index + 1).toLowerCase() + key.substring(index + 1);
                     }
@@ -171,7 +185,7 @@ public class VoMapperUtils {
 
 
                     //setStringIdx -> stringIdx
-                    key = method.getName().substring(3, 4).toLowerCase() + method.getName().substring(4);
+                    key = method.getName().substring(methodType.length(), methodType.length() + 1).toLowerCase() + method.getName().substring(4);
                     if (inputChk(methodsMap.keySet(), methodsSet, key))
                         throw new Exception();
                     methodsMap.put(key, method);
@@ -199,14 +213,14 @@ public class VoMapperUtils {
         return createMethodMap(methodList.toArray(new Method[0]), methodType);
     }
 
-    private boolean inputChk(Set<String> methodsKeySet, Set<String> keySet, String key) throws Exception{
+    private boolean inputChk(Set<String> methodsKeySet, Set<String> keySet, String key) throws Exception {
         if (methodsKeySet.contains(key) && !keySet.contains(key)) {
             throw new Exception(key + " this key is ambiguous");
         }
         return false;
     }
 
-    private int regIndexOf(String key, String regexp) {
+    private static int regIndexOf(String key, String regexp) {
         Pattern pattern = Pattern.compile(regexp);
         Matcher matcher = pattern.matcher(key);
         if (matcher.find())

@@ -13,7 +13,7 @@ public class VoMapperTest {
     public void defualtVoMapperTest() throws Exception {
 
         //VoMapper Set
-        Map<String, Method> setSampleVoMap = VoMapperUtils.getFieldMehtods(SampleVo.class, "set");
+        Map<String, Method> setSampleVoMap = VoMapperUtils.getFieldMehtods(SampleVo.class, "set","all");
         SampleVo sampleVo = new SampleVo();
 
         setSampleVoMap.get("key").invoke(sampleVo, "key");
@@ -23,7 +23,6 @@ public class VoMapperTest {
         Map<String, Method> getSampleVoMap = VoMapperUtils.getFieldMehtods(SampleVo.class, "get");
         assertEquals("Vo Key Check", getSampleVoMap.get("key").invoke(sampleVo), "key");
         assertEquals("Vo Value Check", getSampleVoMap.get("value").invoke(sampleVo), "value");
-
     }
 
 }

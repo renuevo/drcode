@@ -300,4 +300,3 @@ String dslQuery = EsQueryBuilder.getQuery(query, 10, "java"); //return to Json D
 >EsMapper esMapper = new EsMapper();
 >List<SampleVo> sampleVoList = esMapper.getSearchSource(response, SampleVo.class); //elastic response List<Object> return
 >```
->

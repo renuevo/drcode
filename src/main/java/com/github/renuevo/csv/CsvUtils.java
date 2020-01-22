@@ -115,7 +115,7 @@ public class CsvUtils {
             csvTitle[0] = removeUTF8BOM(csvTitle[0]);
 
             while ((csvLine = csvReader.readNext()) != null) {
-                classTemplate = classType.newInstance();
+                classTemplate = classType.getDeclaredConstructor().newInstance();
                 for (int i = 0; i < csvTitle.length; i++) {
                     if (setMethodMap.containsKey(csvTitle[i]))
                         setMethodMap.get(csvTitle[i]).invoke(classTemplate, csvLine[i]);
